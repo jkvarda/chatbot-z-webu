@@ -42,12 +42,14 @@ if user_input:
         f"Dotaz: {user_input}\nOdpověď:"
     )
 
-    response = openai.ChatCompletion.create(
+    client = openai.OpenAI(api_key=openai.api_key)
+    response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "Jsi odborný chatbot pro investice a energetiku."},
             {"role": "user", "content": prompt}
         ]
     )
-    odpoved = response.choices[0].message["content"]
-    st.write("Odpověď chatbota:", odpoved)
+    answer = response.choices[0].message.content
+    st.write("Odpověď chatbota:", answer)
+
